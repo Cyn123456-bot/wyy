@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_1678369_2484z607zh5.css"/>
+		<link rel="stylesheet" type="text/css" href="css/wangyiyun.css"/>
+		<script type="text/javascript" src="//at.alicdn.com/t/font_1678369_2484z607zh5.js"></script>
+		<title>网易云音乐播放器</title>
+		
+	</head>
+	<body>
+		<div id="app">
+			<div class="container">
+				<!-- 顶部 -->
+				<div class="header"  @click="hide">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="logo col-md-4">
+								<img src="image/weather天气.png" style="float: left;">
+								<h3 style="float: left;line-height: 1.8;color: white;">悦听</h3>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="search col-md-6">
+								<input type="text" class="form-control" 
+								v-model="query" @keyup.enter="searchmusic" placeholder="请输入歌曲信息" 
+								style="border-radius: 20px;margin-top: 10%;" name="" id="" value="" />
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 中间主体部分 -->
+				<div class="content">
+					<div class="row">
+						<div class="col-md-3" style="overflow: auto;">
+							<div class="list">
+								<ul>
+									<li class="table-striped" v-for="item in musiclist">
+										<a @click="playmusic(item.id)" style="float: left;" href="#">播放</a>
+										<b>{{ item.name }}</b>
+										<a v-if="item.mvid!=0" @click="playmv(item.mvid)" style="float: right;" href="#">MV</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="donghua">
+								<img src="image/bg.jpg" style="width: 100%;height: 100%;opacity:0.2;position: relative;" >
+								<img :src="musiccover" style="position: absolute;width: 44%;height: 55%;left: 28%;top: 22%;border-radius: 600px;border: none;" >
+								<img src="" >
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="pinglun">
+								<label style="font-size: 16px;">热门评论</label>
+								<dl v-for="item in hotcomment">
+									<dt>
+										<img :src="item.user.avatarUrl" style="width: 10%;height: 5%;">
+										<label style="">{{ item.user.nickname }}</label>
+									</dt>
+									<dd style="color: #666;">{{ item.content }}</dd>
+								</dl>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+				<!-- 底部 -->
+				<div class="bottom">
+					<div class="row">
+						<div class="col-md-12">
+							<audio ref="audio" loop="loop" class="bofang" :src="musicurl" controls="controls" autoplay="autoplay">
+								
+							</audio>
+						</div>
+					</div>
+				</div>
+				
+				<div class="mv" v-show="isshow">
+					<div class="row">
+						<div class="col-md-12">
+							<video :src="mvurl" class="vo" controls="controls">
+								
+							</video>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 引入axios -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="wangyiyun.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
